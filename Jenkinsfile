@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
           steps {
             bat 'echo hello'
-            bat 'cd \\Users\\1021534\\Dektop\\Jenkins\\hello.py'
+            bat 'echo hellohi'
           }
         }
         stage('Build1') {
