@@ -1,0 +1,46 @@
+name: Conditional Job Flow
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  job1:
+    name: Job 1 (Optional - can skip or succeed)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate job 1
+        run: |
+          echo "Job 1 running"
+          # Simulate skip (exit code 78 = skipped)
+          # exit 78
+
+  job2:
+    name: Job 2 (Always runs after job1)
+    needs: [job1]
+    if: always()  # Ensure it runs even if job1 is skipped or failed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate job 2
+        run: |
+          echo "Job 2 running"
+          # Simulate success or failure here
+          # exit 1  # Uncomment to simulate failure
+
+  job3:
+    name: Job 3 (Runs only if job2 succeeds)
+    needs: [job2]
+    if: ${{ needs.job2.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate job 3
+        run: echo "Job 3 running"
+
+  job4:
+    name: Job 4 (Runs only if job3 succeeds)
+    needs: [job3]
+    if: ${{ needs.job3.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulate job 4
+        run: echo "Job 4 running"
