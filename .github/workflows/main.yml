@@ -13,7 +13,7 @@ jobs:
         run: |
           echo "Job 1 running"
           # Simulate skip (exit code 78 = skipped)
-          # exit 78
+          exit 78
 
   job2:
     name: Job 2 (Always runs after job1)
